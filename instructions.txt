@@ -1,0 +1,32 @@
+Backend - Do in Home folder
+1. 'npm init' 
+    - Set entry point to server.js 
+    - Enter auther and license MIT
+
+2. Install packages: 'npm i express mongoose cors'
+
+3. Install nodemon as a dev dependency: 'npm i -D nodemon'
+
+4. Create server.js
+
+5. Package.json add scripts for starting the server.
+
+// Install react globally
+npm install -g create-react-app
+create-react-app client
+
+// Add proxy value to client package.json to prevent including whole url
+proxy: "http://localhost:5000"
+
+// Add Package.json client-install for users to easily install all react dependencies
+client-install 
+
+// Add package.json to run only client
+"npm start --prefix client"
+
+// Add to run client and server concurrently
+"concurrently" call "npm run dev"
+
+// Install axios in client
+
+// Delete .git 'rm -rf .git/' from client and parent folder then do git init in parent folder to push
