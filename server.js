@@ -29,4 +29,19 @@ app.post("/add", async (req, res) => {
     .catch(err => res.json(err))
 });
 
+app.put('/update/:id', async (req,res) => {
+  const {id} = req.params
+  // console.log(id)
+  TodoModel.findByIdAndUpdate({_id: id}, {complete: true})
+  .then(result => res.json(result))
+  .catch(err => res.json(err))
+})
+
+app.delete('/delete/:id', async (req,res) => {
+  const {id} = req.params
+  TodoModel.findByIdAndDelete({_id: id})
+  .then(result => res.json(result))
+  .catch(err => res.json(err))
+})
+
 app.listen(port, () => console.log(`Listening on port ${port}`));
