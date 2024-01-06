@@ -14,9 +14,16 @@ mongoose.connect('mongodb://localhost/todo-app')
 
 mongoose.set('debug', true)
 
-app.post("/add", (req, res) => {
+app.get('/get', async (req,res) => {
+  await TodoModel.find()
+  .then(result => res.json(result))
+  .catch(err => res.json(err))
+})
+
+app.post("/add", async (req, res) => {
   const task = req.body.task;
-  TodoModel.create({
+  // res.send('Got it')
+  await TodoModel.create({
     task: task
   }).then((result) => res.json(result))
     .catch(err => res.json(err))

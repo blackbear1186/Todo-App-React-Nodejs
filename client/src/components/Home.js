@@ -1,18 +1,32 @@
-import React, { useState } from "react";
-import TodoForm from './TodoForm'
+import React, { useEffect, useState } from "react";
+import TodoForm from "./TodoForm";
+import axios from "axios";
+import {nanoid} from 'nanoid'
 
 function Home() {
   const [todos, setTodos] = useState([]);
+  // const id = nanoid()
 
+  useEffect(() => {
+      axios
+        .get("http://localhost:5000/get")
+        .then((result) => {
+          setTodos(result.data)
+        })
+        .catch((err) => console.log(err));
+    
+  },[]);
   return (
     <div>
       <h2>Todo List</h2>
       <TodoForm />
-      {todos.length === 0 ? (
-        <h2>No Record</h2>
-      ) : (
-        todos.map((todo) => <div>{todo}</div>)
-      )}
+      <ul>
+        
+      {todos.map((todo) => <li key={''}>{todo.task}</li>)}
+
+        
+      </ul>
+      
     </div>
   );
 }
