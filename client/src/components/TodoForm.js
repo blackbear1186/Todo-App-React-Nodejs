@@ -1,5 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { TextField,Button } from "@mui/material";
+import AddIcon from '@mui/icons-material/Add';
+import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
+import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
+
 
 function TodoForm() {
   const [task, setTask] = useState();
@@ -10,10 +15,23 @@ function TodoForm() {
       .catch((err) => console.log(err));
   };
   return (
-    <div>
-      <input type="text" onChange={e => setTask(e.target.value)} placeholder="Enter a task"/>
-      <button type="button" onClick={handleTask}>Add</button>
-    </div>
+    <>
+    <TextField
+      variant="outlined"
+      label="Enter a task"      
+      value={task}
+      onChange={e => setTask(e.target.value)} 
+      autoFocus
+    />
+
+
+      {/* <Button variant="contained" onClick={handleTask}>Add</Button> */}
+      <AddBoxRoundedIcon
+        fontSize="large"
+        color="success"
+        className="add"
+      />
+    </>
   );
 }
 

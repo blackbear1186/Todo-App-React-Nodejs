@@ -30,3 +30,6 @@ client-install
 // Install axios in client
 
 // Delete .git 'rm -rf .git/' from client and parent folder then do git init in parent folder to push
+
+// Install material ui and mui icons
+// Add google web fonts to index.html
