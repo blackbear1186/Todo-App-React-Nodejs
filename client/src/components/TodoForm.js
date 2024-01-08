@@ -29,6 +29,11 @@ function TodoForm({ isEditing, id}) {
     setNewTask("");
     window.location.reload()
   };
+  const keyEnter = (e) => {
+    if(e.key === 'Enter'){
+      HandleSubmitEdit()
+    }
+  }
    useEffect(() => {
    
       isEditing === true ? setEdit(true) : setEdit(false)
@@ -41,6 +46,9 @@ function TodoForm({ isEditing, id}) {
         placeholder="Enter a task"
         value={newTask}
         onChange={(e) => setNewTask(e.target.value)}
+        onKeyDown={(e) => {
+          keyEnter()
+        }}
         autoFocus
       />
       <IconButton onClick={(e) => HandleSubmitEdit(e)}>

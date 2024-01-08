@@ -7,7 +7,7 @@ const addRoute= require('./routes/addRoute.js')
 const getRoute = require('./routes/getRoute.js')
 const deleteRoute = require('./routes/deleteRoute.js')
 const updateRoute = require('./routes/updateRoute.js')
-
+const updateComplete = require('./routes/updateCompleteRoute.js')
 
 app.use(cors());
 app.use(express.json());
@@ -23,5 +23,6 @@ app.use(getRoute)
 app.use(addRoute)
 app.use(updateRoute)
 app.use(deleteRoute)
+app.use(updateComplete)
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

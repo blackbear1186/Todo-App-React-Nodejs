@@ -12,6 +12,22 @@ import EditIcon from "@mui/icons-material/Edit";
 
 function Home({ setEditing, setID }) {
   const [todos, setTodos] = useState([]);
+  const [isChecked, setIsChecked] = useState(true)
+  const editTask = async (id, complete) => {
+
+    await axios
+    .put(`http://localhost:5000/update-complete/${id}`,{complete: complete})
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((err) => console.log(err));
+
+  }
+  const handleCheck = (id) => {
+    setIsChecked(!isChecked)
+    editTask(id, isChecked)
+    console.log(isChecked)
+  }
 
   useEffect(() => {
     axios
@@ -44,7 +60,9 @@ function Home({ setEditing, setID }) {
     >
       {todos.map((todo) => (
         <ListItem key={todo._id}>
-          <Checkbox />
+          <Checkbox 
+            onClick={() => handleCheck(todo._id)}
+          />
           <ListItemText primary={todo.task} />
           <IconButton onClick={() => handleEdit(todo._id)}>
             <EditIcon />
