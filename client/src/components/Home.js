@@ -12,7 +12,6 @@ import EditIcon from "@mui/icons-material/Edit";
 
 function Home({ setEditing, setID }) {
   const [todos, setTodos] = useState([]);
-
   const editTask = async (id, complete) => {
     await axios
       .put(`http://localhost:5000/update-complete/${id}`, {
@@ -59,7 +58,9 @@ function Home({ setEditing, setID }) {
       {todos.map((todo) => (
         <ListItem key={todo._id}>
           <Checkbox
-            onClick={(e) => handleCheck(e, todo._id)}
+            onClick={(e) => {
+              handleCheck(e, todo._id);
+            }}
           />
           <ListItemText primary={todo.task} />
           <IconButton onClick={() => handleEdit(todo._id)}>

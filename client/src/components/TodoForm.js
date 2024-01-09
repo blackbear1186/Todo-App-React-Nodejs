@@ -4,7 +4,7 @@ import { TextField, IconButton, FormControl, Input } from "@mui/material";
 import AddBoxRoundedIcon from "@mui/icons-material/AddBoxRounded";
 import SaveIcon from "@mui/icons-material/Save";
 
-function TodoForm({ isEditing, id}) {
+function TodoForm({ isEditing, id }) {
   const [task, setTask] = useState("");
   const [newTask, setNewTask] = useState("");
   const [edit, setEdit] = useState(false);
@@ -15,6 +15,15 @@ function TodoForm({ isEditing, id}) {
       .then((result) => console.log(result))
       .catch((err) => console.log(err));
   };
+  const keydown = async (e) => {
+    if (e.key === "Enter") {
+      await axios
+        .post("http://localhost:5000/add", { task: task })
+        .then((result) => console.log(result))
+        .catch((err) => console.log(err));
+    }
+  };
+
   const editTask = async (id, newTask) => {
     await axios
       .put(`http://localhost:5000/update/${id}`, { task: newTask })
@@ -27,27 +36,31 @@ function TodoForm({ isEditing, id}) {
     e.preventDefault();
     editTask(id, newTask);
     setNewTask("");
-    window.location.reload()
+    window.location.reload();
   };
-  const keyEnter = (e) => {
-    if(e.key === 'Enter'){
-      return (() => HandleSubmitEdit(e))
+  const keydownEdit = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      editTask(id, newTask);
+      setNewTask("");
+      window.location.reload();
     }
-  }
-   useEffect(() => {
-   
-      isEditing === true ? setEdit(true) : setEdit(false)
-    }, [isEditing])
+  };
+
+  useEffect(() => {
+    isEditing === true ? setEdit(true) : setEdit(false);
+  }, [isEditing]);
 
   const saveTemplate = (
-    <FormControl sx={{display:"flex", flexDirection:'row', justifyContent: 'center'}}>
+    <FormControl
+      sx={{ display: "flex", flexDirection: "row", justifyContent: "center" }}
+    >
       <Input
         label="Enter a task"
         placeholder="Enter a task"
         value={newTask}
         onChange={(e) => setNewTask(e.target.value)}
-        onKeyDown={(e) => {
-        }}
+        onKeyDown={(e) => keydownEdit(e)}
         autoFocus
       />
       <IconButton onClick={(e) => HandleSubmitEdit(e)}>
@@ -57,12 +70,15 @@ function TodoForm({ isEditing, id}) {
   );
 
   const viewTemplate = (
-    <FormControl sx={{display:"flex", flexDirection:'row', justifyContent: 'center'}}>
+    <FormControl
+      sx={{ display: "flex", flexDirection: "row", justifyContent: "center" }}
+    >
       <TextField
         variant="filled"
         label="Enter a task"
         value={task}
         onChange={(e) => setTask(e.target.value)}
+        onKeyDown={keydown}
         autoFocus
         size="small"
       />
