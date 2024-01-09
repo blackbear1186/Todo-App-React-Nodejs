@@ -12,22 +12,24 @@ import EditIcon from "@mui/icons-material/Edit";
 
 function Home({ setEditing, setID }) {
   const [todos, setTodos] = useState([]);
-  const [isChecked, setIsChecked] = useState(true)
+
   const editTask = async (id, complete) => {
-
     await axios
-    .put(`http://localhost:5000/update-complete/${id}`,{complete: complete})
-    .then((result) => {
-      console.log(result);
-    })
-    .catch((err) => console.log(err));
-
-  }
-  const handleCheck = (id) => {
-    setIsChecked(!isChecked)
-    editTask(id, isChecked)
-    console.log(isChecked)
-  }
+      .put(`http://localhost:5000/update-complete/${id}`, {
+        complete: complete,
+      })
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => console.log(err));
+  };
+  const handleCheck = (e, id) => {
+    if (e.target.checked) {
+      editTask(id, true);
+    } else {
+      editTask(id, false);
+    }
+  };
 
   useEffect(() => {
     axios
@@ -52,16 +54,12 @@ function Home({ setEditing, setID }) {
       .catch((err) => console.log(err));
   };
 
-  
-
-  return  (
-    <List
-      sx={{ width: "100%", maxWidth: 762, margin: "auto" }}
-    >
+  return (
+    <List sx={{ width: "100%", maxWidth: 762, margin: "auto" }}>
       {todos.map((todo) => (
         <ListItem key={todo._id}>
-          <Checkbox 
-            onClick={() => handleCheck(todo._id)}
+          <Checkbox
+            onClick={(e) => handleCheck(e, todo._id)}
           />
           <ListItemText primary={todo.task} />
           <IconButton onClick={() => handleEdit(todo._id)}>

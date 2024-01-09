@@ -31,7 +31,7 @@ function TodoForm({ isEditing, id}) {
   };
   const keyEnter = (e) => {
     if(e.key === 'Enter'){
-      HandleSubmitEdit()
+      return (() => HandleSubmitEdit(e))
     }
   }
    useEffect(() => {
@@ -47,7 +47,6 @@ function TodoForm({ isEditing, id}) {
         value={newTask}
         onChange={(e) => setNewTask(e.target.value)}
         onKeyDown={(e) => {
-          keyEnter()
         }}
         autoFocus
       />
