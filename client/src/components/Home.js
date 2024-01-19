@@ -12,6 +12,7 @@ import EditIcon from "@mui/icons-material/Edit";
 
 function Home({ setEditing, setID }) {
   const [todos, setTodos] = useState([]);
+  // const [complete, setComplete] = useState(true)
   const editTask = async (id, complete) => {
     await axios
       .put(`http://localhost:5000/update-complete/${id}`, {
@@ -25,9 +26,12 @@ function Home({ setEditing, setID }) {
   const handleCheck = (e, id) => {
     if (e.target.checked) {
       editTask(id, true);
+      // setComplete(true)
     } else {
       editTask(id, false);
+      // setComplete(false)
     }
+    // console.log(complete)
   };
 
   useEffect(() => {
@@ -62,7 +66,7 @@ function Home({ setEditing, setID }) {
               handleCheck(e, todo._id);
             }}
           />
-          <ListItemText primary={todo.task} />
+          <ListItemText primary={todo.task} sx={{textDecorationLine: todo.complete ? 'line-through' : 'none'}}/>
           <IconButton onClick={() => handleEdit(todo._id)}>
             <EditIcon />
           </IconButton>

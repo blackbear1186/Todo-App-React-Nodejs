@@ -4,15 +4,23 @@ const router = express.Router();
 
 const TodoModel = require("../models/todo");
 
+const logError = require('../error')
+
+const addTask = async (response, task) => {
+  const post = await TodoModel.create({
+    task:task
+  })
+  response.json(post)
+}
+
+
 router.post("/add", async (req, res, next) => {
   try {
-    const task = req.body.task
-    const post = await TodoModel.create({
-      task:task
-    })
-    res.json(post)
-  } catch (err) {
-    next(err);
+    
+    addTask(res, req.body.task)
+  } catch (error) {
+
+    logError(error,next)
   }
 });
 
